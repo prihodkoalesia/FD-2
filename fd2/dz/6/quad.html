@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Квадрат</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <style>
+        .player {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+        
+        .red {
+            background-color: red
+        }
+        
+        .blue {
+            background-color: blue;
+        }
+        
+        .green {
+            background-color: green;
+        }
+        
+        .yellow {
+            background-color: yellow;
+        }
+        
+        .ball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+        }
+        
+        .player:nth-of-type(1) {
+            top: 0;
+            left: 0;
+        }
+        
+        .player:nth-of-type(2) {
+            top: 0;
+            left: 200px;
+        }
+        
+        .player:nth-of-type(3) {
+            top: 200px;
+            left: 0;
+        }
+        
+        .player:nth-of-type(4) {
+            top: 200px;
+            left: 200px;
+        }
+        
+        #field {
+            position: relative;
+        }
+        /*.start_game*/
+    </style>
+    <button id='start_game'>start</button>
+    <button id='check'>check</button>
+    <div id='field'></div>
+
+
+
+    <script>
+        function Player(name, color) {
+            var _self = this;
+
+            this.name = name;
+            this.color = color;
+            this.count = 0;
+            this.goal = 0;
+            this.punch = function(field) {
+                this.ball = false;
+                if (this.ball) {
+                    var p_id = Math.ceil(Math.random() * this.players.length) - 1;
+                    this.ball = false;
+                    field.players[p_id].getBall();
+                    if (Math.random() * 2 > 1) {
+                        field.players[p_id].addGoal();
+                        this.addCount();
+                        field.player[p_id].ball = false;
+                        field.started = false
+                    }
+                }
+            };
+            this.ball = false;
+
+            this.getBall = function() {
+                this.ball = true
+            };
+            this.addCount = function() {
+
+            };
+            this.addGoal = function() {
+
+            };
+            this.render = function(index) {
+                var ball = '';
+                if (this.ball) {
+                    ball = '<div class = "ball"></div>'
+                };
+                var result = [
+                    '<div class = "player ',
+                    this.color,
+                    '"',
+                    ' data-index="', index, '"',
+                    '>',
+                    ball,
+                    this.name,
+                    '</div>'
+                ];
+                return result.join('');
+            }
+
+            this.click = function(_i, fld) {
+                fld = fld || this.field ;
+                fld.players.forEach(function(p) {
+                    p.ball = false;
+                })
+                _self.getBall();
+                fld.render();
+            }
+
+        }
+
+        var p1 = new Player('Стрельцов', 'green');
+        var p2 = new Player('Яшин', 'red');
+        var p3 = new Player('Pele', 'blue');
+        var p4 = new Player('Messi', 'yellow');
+
+        function Field(players, obj) {
+            this.domObj = obj;
+            this.players = players;
+            this.started = false;
+
+            this.render = function() {
+                var _self = this;
+                var result = this.players.map(function(p, ind) {
+                    return p.render(ind)
+                }).join('');
+
+                this.domObj.innerHTML = result;
+
+                var domPlayers = document.getElementsByClassName('player');
+
+                for (var i = 0; i < domPlayers.length; i++) {
+
+                    domPlayers[i].addEventListener('click', function(_i, _f) {
+                        return function() {
+                            _f.players[_i].click(_i, _f);
+                        }
+                    }(i, _self));
+                }
+            };
+
+            this.renderInterface = function() {
+
+                var result = this.players.map(function(p, ind) {
+                    return p.render(ind)
+                }).join('');
+
+                this.domObj.innerHTML = result;
+                var domPlayers = document.getElementsByClassName('player');
+                var _self = this;
+                for (var i = 0; i < domPlayers.length; i++) {
+                    domPlayers[i].addEventListener('click', {
+                        handleEvent: this.players[i].click,
+                        field: _self
+                    });
+                }
+            };
+
+            this.start = function() {
+                if (!this.started) {
+                    this.started = true;
+                    var p_id = Math.ceil(Math.random() * this.players.length) - 1;
+                    this.players[p_id].getBall();
+                }
+                else {
+                    console.log('the game is started now!');
+                }
+                this.render();
+            };
+
+
+        }
+
+        var f = new Field([p1, p2, p3, p4], document.getElementById('field'));
+
+        var start_game = document.getElementById('start_game');
+        start_game.addEventListener('click', function() {
+            f.start();
+        })
+    </script>
+</body>
+
+</html>

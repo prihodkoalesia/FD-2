@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Василий Теркин</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <p>
+            - Дельный, что и говорить,<br>
+            Был старик тот самый,<br>
+            Что придумал суп варить<br>
+            На колесах прямо.<br>
+            Суп - во-первых. Во-вторых,<br>
+            Кашу в норме прочной.<br>
+            Нет, старик он был старик<br>
+            Чуткий - это точно.<br>
+        </p>
+    <div id="counts"></div>
+    <div id="sorted"></div>
+    <script type="text/javascript">
+        var str = document.getElementsByTagName("p")[0].innerHTML;
+        // убираем <br>
+        String.prototype.removeBr = function() {
+            return this.toLowerCase().split("<br>").join('');
+        }
+        
+        // получаем массив слов
+        String.prototype.getWords = function() {
+            //удаляем дефисы
+            return this.split(" ").filter(function(w) {
+                    return (w != '-' && w != '' && w!="\n");
+                })
+                // удаляем из каждого слова возможные переносы строк
+                // запятые, точки, восклицательные и вопросительные знаки
+                .map(function(w){
+                    if (w[w.length - 1] == "\n") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    if (w[w.length - 1] == "\r") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    if (w[w.length - 1] == "!") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    if (w[w.length - 1] == "?") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    if (w[w.length - 1] == ".") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    if (w[w.length - 1] == ",") {
+                        w=w.substring(0,w.length - 1);
+                    }
+                    return w;
+                })
+        }
+        
+        Array.prototype.countWords = function () {
+            var result = {};
+            this.forEach(function(w) {
+                if(typeof result[w]=="undefined") {
+                    result[w]=0;
+                }
+                result[w]++;
+                return result;
+            });
+            return result;
+        }
+        
+        
+        var words = str.removeBr().getWords();
+        var cnt = words.countWords();
+        var counted = [];
+        for (w in cnt) {
+            counted = counted.concat([
+                "<p>",
+                w,
+                ": ",
+                cnt[w]
+            ]);
+        } 
+        document.getElementById('counts').innerHTML = counted.join('');
+        document.getElementById('sorted').innerHTML = words.sort().join(", ");
+    </script>
+</body>
+
+</html>
