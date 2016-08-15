@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Василий Теркин</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <p>
+            - Дельный, что и говорить,<br>
+            Был старик тот самый,<br>
+            Что придумал суп варить<br>
+            На колесах прямо.<br>
+            Суп - во-первых. Во-вторых,<br>
+            Кашу в норме прочной.<br>
+            Нет, старик он был старик<br>
+            Чуткий - это точно.<br>
+        </p>
+    <div id="counts"></div>
+    <div id="sorted"></div>
+    <script type="text/javascript">
+        var str = document.getElementsByTagName("p")[0].innerHTML;
+        // убираем <br>
+        String.prototype.removeBr = function() {
+            return this.toLowerCase().split("<br>").join('');
+        }
+        
+        // получаем массив слов
+        String.prototype.getWords = function() {
+            return this.match(/[a-zA-Zа-яА-Я]+(?:[-]?)[a-zA-Zа-яА-Я]*/g);
+        }
+        
+        // То же самое - с удалением <br> и регистронезависимо
+        String.prototype.getWords2 = function() {
+            return this.match(/[a-zA-Zа-яА-Я]+(?:[-]?)[a-zA-Zа-яА-Я]*(?=.*(?:\<br\>))/gi);
+        }
+        
+        Array.prototype.countWords = function () {
+            var result = {};
+            this.forEach(function(w) {
+                if(typeof result[w]=="undefined") {
+                    result[w]=0;
+                }
+                result[w]++;
+                return result;
+            });
+            return result;
+        }
+        
+        
+        var words = str.removeBr().getWords();
+        //var words = str.getWords2();
+        var cnt = words.countWords();
+        var counted = [];
+        for (w in cnt) {
+            counted = counted.concat([
+                "<p>",
+                w,
+                ": ",
+                cnt[w]
+            ]);
+        } 
+        document.getElementById('counts').innerHTML = counted.join('');
+        document.getElementById('sorted').innerHTML = words.sort().join(", ");
+    </script>
+</body>
+
+</html>
