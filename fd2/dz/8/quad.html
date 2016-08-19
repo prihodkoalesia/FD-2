@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Квадрат</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <style>
+        .player {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+        
+        .red {
+            background-color: red
+        }
+        
+        .blue {
+            background-color: blue;
+        }
+        
+        .green {
+            background-color: green;
+        }
+        
+        .yellow {
+            background-color: yellow;
+        }
+        
+        .ball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+        }
+        
+        .player:nth-of-type(1) {
+            top: 0;
+            left: 0;
+        }
+        
+        .player:nth-of-type(2) {
+            top: 0;
+            left: 200px;
+        }
+        
+        .player:nth-of-type(3) {
+            top: 200px;
+            left: 0;
+        }
+        
+        .player:nth-of-type(4) {
+            top: 200px;
+            left: 200px;
+        }
+        
+        #field {
+            position: relative;
+        }
+        /*.start_game*/
+    </style>
+    <button id='start_game'>start</button>
+    <div id='field'></div>
+
+
+
+    <script>
+        function Player(name, color, number, field) {
+            var _self = this;
+
+            this.name = name;
+            this.color = color;
+            this.count = 0;
+            this.goal = 0;
+            this.field = field;
+            this.number = number;
+            this.domObj = document.createElement('div');
+            this.domObj.setAttribute("class", this.color+ " player");
+            this.domObj.appendChild(document.createTextNode(this.name));
+
+            this.getBall = function() {
+                this.field.ball.setPlayer(this.number);
+            };
+            
+            this.domObj.addEventListener('click', function(){
+                _self.getBall();
+            });
+            this.addCount = function() {
+
+            };
+            this.addGoal = function() {
+
+            };
+            this.render = function(index) {
+                return this.domObj;
+            }
+        }
+
+        function Field(obj) {
+            this.domObj = obj;
+            this.shadowDomObj = obj.cloneNode(); // клон нашего поля для последующего рендера
+            // создаем пустой массив, который заполним позднее
+            this.players = [];
+            this.started = false;
+            this.maxPlayers = 4;
+            this.playersColors = ['red', 'green', 'blue', 'yellow'];
+            this.ball = new Ball(this);
+
+            this.render = function() {
+                // теперь мы просто добавляем в shadowDomObj наших игроков и обновляем дом
+                var _self = this;
+                this.players.forEach(function(p, ind) {
+                    _self.shadowDomObj.appendChild(p.render());
+                });
+                var parent = this.domObj.parentNode;
+                parent.replaceChild(this.shadowDomObj,this.domObj);
+            };
+
+            this.start = function() {
+                if (!this.started) {
+                    // заполняем хеш this.players
+                    for (var i = 0; i < this.maxPlayers; i++) {
+                        var pName = prompt("Введите имя игрока № " + (1 + i) + " цвета " + this.playersColors[i]);
+                        this.players[i] = new Player(pName, this.playersColors[i], i, this);
+                    }
+                    this.started = true;
+                    var p_id = Math.ceil(Math.random() * (this.maxPlayers - 1));
+                    // передаем мяч игроку
+                    this.ball.setPlayer(p_id);
+                }
+                else {
+                    console.log('the game is started now!');
+                }
+                this.render();
+            };
+        }
+        
+        function Ball(field) {
+            this.player=false;
+            this.field = field;
+            this.domObj = document.createElement('div');
+            this.domObj.setAttribute("class", "ball")
+            this.setPlayer = function(playerId){
+                // вычисляем, куда нам переместить мяч
+                // удаляем мяч из предыдущего игрока
+                if(this.player) {
+                    this.field.players[this.player].domObj.removeChild(this.domObj);
+                }
+                // передаем мяч новому игроку
+                this.player = playerId;
+                // отображаем это в DOM
+                this.field.players[this.player].domObj.appendChild(this.domObj);
+                
+            }
+        }
+        
+        var f = new Field(document.getElementById('field'));
+
+        var start_game = document.getElementById('start_game');
+        start_game.addEventListener('click', function() {
+            f.start();
+        })
+    </script>
+</body>
+
+</html>
