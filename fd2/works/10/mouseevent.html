@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Событие движения мыши</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        #two {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Подвигайте мышью</h1>
+    <div id="one"></div>
+    <h1>Задание</h1>
+    <p>Сделать перемещение подсказки плавным, с задержкой</p>
+    <div id="two">А я у мышки на хвосте</div>
+    
+    <script type="text/javascript">
+        var one = document.getElementById("one");
+        var two = document.getElementById("two");
+
+        document.addEventListener('mousemove', function(e) {
+            one.innerHTML = "Координаты: X: " + e.clientX + " и Y: " + e.clientY;
+            two.style.top = e.clientY + 20 + "px";
+            two.style.left = e.clientX + 20 + "px";
+        });
+    </script>
+</body>
+
+</html>

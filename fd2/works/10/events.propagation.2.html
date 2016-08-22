@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Распространение событий - 2</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>
+            Распространение событий - 2
+        </h1>
+        <p>Событие по-умолчанию</p>
+        <a id="one" href="http://ya.ru" target="_blank">Отменяет переход по ссылке</a> 
+        <a id="two" href="http://ya.ru" target="_blank" onClick="alert('Отменили переход по ссылке'); return false;">Отменяет переход по ссылке</a>
+        <a id="three" href="http://ya.ru" target="_blank">Отменяет переход по ссылке</a> 
+        <a id="four" href="http://ya.ru" target="_blank" onClick="cancel();">А вот так не отменится</a>
+        <a id="five" href="http://ya.ru" target="_blank">И вот так - тоже не отменится</a> 
+        <script type="text/javascript">
+            var one = document.getElementById("one");
+            var two = document.getElementById("two");
+            var three = document.getElementById("three");
+            var four = document.getElementById("four");
+            var four = document.getElementById("five");
+            
+            one.addEventListener('click', function(e){
+                console.log("отменили действие по-умолчанию");
+                e.preventDefault();
+            });
+            three.onclick = function(){
+                console.log("Отменяем переход по ссылке");
+                return false;
+            }
+            five.addEventListener('click', function(e){
+                console.log("А вот и не отменится событие");
+                return false;
+            })
+            
+            function cancel(){
+                return false;
+            }
+            
+        </script>
+    </body>
+</html>

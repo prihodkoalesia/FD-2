@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Таймеры</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>
+            Таймеры
+        </h1>
+        <p>setTimeout - вызов функции однократно</p>
+        <p>setInterval - вызов функции через промежуток. Возвращается ссылка на объект, который можно потом использовать для отключения</p>
+        <p>clearInterval - jотключение вызова функции, установленной через setInterval</p>
+        <a href="#" id="one">Через секунду сделать alert</a>
+        <a href="#" id="two">Стартовать события выполняющиеся по таймеру</a>
+        <a href="#" id="three">Остановить события выполняющиеся по таймеру</a>
+        <h1>Задание</h1>
+        <p>Сделать таймер, который плавно меняет числа в блоке</p>
+        <script type="text/javascript">
+            var one = document.getElementById("one");
+            var two = document.getElementById("two");
+            var three = document.getElementById("three");
+            
+            var interval = false;
+            
+            
+            one.addEventListener('click', function(e){
+                e.preventDefault();
+                setTimeout(function(){alert("Вызвали alert через 1 секунду");}, 1000);
+            });
+            
+            two.addEventListener('click', function(e){
+                e.preventDefault();
+                if(!interval) {
+                    interval = setInterval(function(){console.log("Прошла секунда");}, 1000);
+                }
+            });
+            
+            three.addEventListener('click', function(e){
+                e.preventDefault();
+                if(interval) {
+                    clearInterval(interval);
+                    interval = false;
+                }
+            });
+        </script>
+    </body>
+</html>

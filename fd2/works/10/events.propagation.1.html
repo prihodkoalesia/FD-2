@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Распространение событий</title>
+        <meta charset="utf-8">
+        <style>
+            .demoDiv{
+                padding: 30px;
+            }
+            #one {
+                background-color: red;
+            }
+            #two {
+                background-color: green;
+            }
+            #three {
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Распространение событий
+        </h1>
+        <p>События распространяются от частного к общему</p>
+        <div id="one" class="demoDiv">
+            <div id="two" class="demoDiv">
+                <div id="three" class="demoDiv">Кликни для проверки</div>
+            </div>
+        </div>
+        <p>Узнать, всплывает ли событие можно при помощи свойства currentTarget.
+        Если target==currentTarget - значит событие произошло на родительском элементе, а не на дочернем. 
+        </p>
+        <p>
+            Отменить распространение можно с помощью метода event.stopPropagation();
+        </p>
+        
+        <h1>Задание</h1>
+        Модифицировать код так, чтобы alert показывался только в случае, если событие не всплывало. 
+        
+        
+        <script type="text/javascript">
+            var one = document.getElementById("one");
+            var two = document.getElementById("two");
+            var three = document.getElementById("three");
+            
+            one.addEventListener('click', function(e){
+                alert("clicked red");
+            });
+            
+            two.addEventListener('click', function(e){
+                alert("clicked green");
+            });
+            
+            three.addEventListener('click', function(e){
+                alert("clicked blue");
+                if(e.altKey) {
+                    e.stopPropagation();
+                    alert("Propagaion stopped");
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Многократные события</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <input id="btnOutput" type="button" value="На эту кнопку повешено много обработчиков событий" />
+    <h1>Задание</h1>
+    <p>Заменить console.log в обработчике события mousedown на alert. Посмотреть что происходит, попытаться объяснить что произошло.</p>
+    
+    <script type="text/javascript">
+        document.getElementById("btnOutput").addEventListener('click', function(e) {
+            alert("Первый обработчик клика");
+        });
+        document.getElementById("btnOutput").addEventListener('click', function(e) {
+            alert("Второй обработчик клика");
+        });
+        document.getElementById("btnOutput").addEventListener('click', function(e) {
+            alert("Третий обработчик клика");
+        });
+
+        document.getElementById("btnOutput").addEventListener('mousedown', function(e) {
+             console.log("Нажатие кнопки мыши");
+        });
+    </script>
+</body>
+
+</html>

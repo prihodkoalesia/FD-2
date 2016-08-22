@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Проверка форм</title>
+    <meta charset="utf-8">
+    <style>
+        input.error {
+            border: 1px solid red;
+        }
+        
+        .errorDiv {
+            border: 1px solid red;
+            background-color: rgba(255, 0, 0, 0.2);
+            color: red;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <form id="myForm" name="myForm">
+        <div>
+            <input type="text" name="firstName" placeholder="Введите имя" />
+        </div>
+        <div>
+            <input type="text" name="fatherName" placeholder="Введите отчество" />
+        </div>
+        <div>
+            <input type="text" name="lastName" placeholder="Введите фамилию" />
+        </div>
+        <div>
+            <input type="text" name="date" placeholder="Введите дату рождения" />
+        </div>
+        <input type="button" name="btn" id="btn" value="Жмякать здесь" />
+    </form>
+    <script type="text/javascript">
+        // получаем нашу форму она у нас на странице одна 
+        var form = document.forms.myForm;
+        // получаем нужные нам элементы формы
+        // так как мы не собираемся сабмитить форму, а только проверяем ее, 
+        // нет смысла ставить обработчик на submit
+        var inputFirstName = form.elements[0];
+        var inputFatherName = form.elements[1];
+        var inputLastName = form.elements[2];
+        var inputDate = form.elements[3];
+
+        var btn = document.getElementById("btn");
+        /*
+        // вот так исключение отрабатывать не будет!
+        // try {
+        //        btn.addEventListener('click', checkForm);
+        //    } catch (e) {
+        //    console.log(e)
+        // }
+        */
+
+        btn.addEventListener('click', checkForm);
+
+        function checkForm(e) {
+            // удаляем все css-классы ошибок
+            var errored = document.getElementsByClassName("error");
+            if (errored.length > 0) {
+                for (var i = 0; i < errored.length; i++) {
+                    errored[i].classList.remove("error");
+                }
+            }
+
+            try {
+                // можно, конечно и так
+                // проверяем имя
+                if (!checkString(inputFirstName.value)) {
+                    throw new formError(inputFirstName);
+                }
+                // но лучше так
+                // проверяем отчество
+                checkStringEx(inputFatherName);
+                // проверяем фамилию
+                checkStringEx(inputLastName);
+                // проверяем дату
+                checkDate(inputDate);
+
+                // все проверки пройдены, делаем остальную часть
+                // удаляем форму
+                document.forms[0].parentElement.removeChild(document.forms[0]);
+                // создаем сообщение
+                var messageDiv = document.createElement("div");
+                // создаем текстовый блок
+                var messageText = document.createTextNode("Проверка пройдена, нажмите ");
+                // создаем ссылку
+                var link = document.createElement("a");
+                link.innerHTML = "ссылку";
+                link.setAttribute("href", "#");
+                link.addEventListener("click", function(){
+                    window.location.replace("http://yandex.ru");
+                });
+                
+                // все это складываем в messageDiv
+                messageDiv.appendChild(messageText);
+                messageDiv.appendChild(link);
+                
+                // и добавляем в DOM для отображения в браузере
+                document.body.appendChild(messageDiv);
+            }
+            catch (e) {
+                // проверяем,  наше ли исключение выброшено
+                if (e.type === "myFormError") {
+                    // стилизуем объект, в котором обнаружили ошибку
+                    e.stylize();
+                    // добавляем сообщение об ошибке
+                    var msg = e.getMessage();
+                    document.body.appendChild(msg);
+
+                    // удаляем сообщение через 3 секунды
+                    setTimeout(function() {
+                        msg.parentNode.removeChild(msg);
+                    }, 3000);
+                }
+                else {
+                    // отправляем исключение дальше
+                    throw e;
+                }
+            }
+        }
+
+        function checkString(str) {
+            return /^[a-zа-я]+(?:[-]?[a-zа-я]*)?$/gi.test(str);
+        }
+
+        function checkStringEx(obj) {
+            if(!/^[a-zа-я]+(?:[-]?[a-zа-я]*)?$/gi.test(obj.value)) {
+                throw new formError(obj);
+            }
+        }
+
+        function checkDate(obj) {
+            if(!/^\d{1,2}(\.|:|-|\/|\\)\d{1,2}(\.|:|-|\/|\\)\d{4}$/gi.test(obj.value)) {
+                throw new formError(obj);
+            }
+        }
+
+        function formError(object) {
+            this.type = "myFormError";
+            this.stylize = function() {
+                object.classList.add("error");
+            }
+            this.message = "Ошибка проверки поля " + object.getAttribute('name');
+            
+            // рисуем мессадж
+            this.getMessage =  function () {
+                var errorDiv = document.createElement("div");
+                errorDiv.classList.add("errorDiv");
+                console.log(errorDiv);
+                errorDiv.appendChild(document.createTextNode(this.message));
+                return errorDiv;
+            }
+            
+        }
+    </script>
+</body>
+
+</html>

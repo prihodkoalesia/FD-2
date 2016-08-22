@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>События</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <input id="btnOutput" type="button" value="Вывести с консоль объект события" />
+    <div>
+        <h1>Наиболее используемые события</h1>
+        <table>
+            <tbody>
+                <tr>
+                    <th width="18%">Название</th>
+                    <th width="82%">Описание</th>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onblur.php">onblur</a></td>
+                    <td>Код переданный данному событию исполнится после того, как элемент перестанет быть активным.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onchange.php">onchange</a></td>
+                    <td>Код переданный данному событию исполнится после того, как содержимое данного элемента будет изменено.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onclick.php">onclick</a></td>
+                    <td>Код переданный данному событию исполнится после того, как на данном элементе будет произведен щелчок мыши.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_ondblclick.php">ondblclick</a></td>
+                    <td>Код переданный данному событию исполнится после того, как на данном элементе будет произведен двойной щелчок мыши.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onerror.php">onerror</a></td>
+                    <td>Код переданный данному событию исполнится если при загрузки документа или картинки произойдет ошибка.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onfocus.php">onfocus</a></td>
+                    <td>Код переданный данному событию исполнится после того, как элемент станет активным.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onkeypress.php">onkeypress</a></td>
+                    <td>Код переданный данному событию исполнится после того, как будет произведено нажатие на клавишу клавиатуры.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onkeyup.php">onkeyup</a></td>
+                    <td>Код переданный данному событию исполнится после того, как нажатая клавиша будет отпущена.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onload.php">onload</a></td>
+                    <td>Код переданный данному событию исполнится после того, как картинка или страница полностью загрузится.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onmousedown.php">onmousedown</a></td>
+                    <td>Код переданный данному событию исполнится после того, как будет нажата клавиша мыши.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onmouseout.php">onmouseout</a></td>
+                    <td>Код переданный данному событию исполнится после того, как курсор мыши будет выведен за пределы элемента.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onmouseover.php">onmouseover</a></td>
+                    <td>Код переданный данному событию исполнится после того, как курсор мыши будет наведен на элемент.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onmouseup.php">onmouseup</a></td>
+                    <td>Код переданный данному событию исполнится после того, как будет отпущена нажатая кнопка мыши.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onselect.php">onselect</a></td>
+                    <td>Код переданный данному событию исполнится после того, как текст элемента будет выделен.</td>
+                </tr>
+                <tr>
+                    <td><a href="http://www.wisdomweb.ru/HDOMd/event_onunload.php">onunload</a></td>
+                    <td>Код переданный данному событию исполнится после того, как страница будет закрыта.</td>
+                </tr>
+            </tbody>
+        </table>
+        Полный список событий браузера можно посмотреть на <a href="http://www.w3schools.com/jsref/dom_obj_event.asp" target="_blank">W3cSchool</a>
+    </div>
+    <div>
+        <h1>Основные свойства объекта класса Event</h1>
+        <table>
+            <tbody>
+                <tr>
+                    <th width="18%">Свойство</th>
+                    <th width="82%">Описание</th>
+                </tr>
+                <tr>
+                    <td>altKey</td>
+                    <td>Позволяет узнать была ли нажата клавиша Alt во время вызова события.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td>button</td>
+                    <td>Позволяет узнать какая клавиша мыши была нажата во время вызова события. Атрибут имеет значение 0 если была нажата левая кнопка мыши, 1 если была нажата средняя клавиша мыши и 2 если была нажата правая кнопка мыши.</td>
+                </tr>
+                <tr>
+                    <td>clientX</td>
+                    <td>Позволяет узнать горизонтальные координаты указателя мыши во время вызова события относительно границ документа.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td>clientY</td>
+                    <td>Позволяет узнать вертикальные координаты указателя мыши во время вызова события относительно границ документа.</td>
+                </tr>
+                <tr>
+                    <td>ctrlKey</td>
+                    <td>Позволяет узнать были ли нажата клавиша Ctrl во время вызова события.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td>screenX</td>
+                    <td>Позволяет узнать горизонтальные координаты указателя мыши во время вызова события относительно границ экрана.</td>
+                </tr>
+                <tr>
+                    <td>screenY</td>
+                    <td>Позволяет узнать вертикальные координаты указателя мыши во время вызова события относительно границ экрана.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td>shiftKey</td>
+                    <td>Позволяет узнать были ли нажата клавиша Shift во время вызова события.</td>
+                </tr>
+                <tr>
+                    <td>target</td>
+                    <td>Позволяет узнать элемент который вызвал событие.</td>
+                </tr>
+                <tr style="background-color: rgb(234, 238, 229);">
+                    <td>type</td>
+                    <td>Позволяет узнать имя события.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("btnOutput").addEventListener('click', function(e) {
+            console.log(e);
+        })
+    </script>
+</body>
+
+</html>

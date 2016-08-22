@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Распространение событий - 3</title>
+        <meta charset="utf-8">
+        <style>
+            .demoDiv{
+                padding: 30px;
+            }
+            #one {
+                background-color: red;
+            }
+            #two {
+                background-color: green;
+            }
+            #three {
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Распространение событий - 3
+        </h1>
+        <p>Распространение имеет две фазы: всплытие и погружение.</p>
+        <div id="one" class="demoDiv">
+            <div id="two" class="demoDiv">
+                <div id="three" class="demoDiv">Кликни для проверки</div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var one = document.getElementById("one");
+            var two = document.getElementById("two");
+            var three = document.getElementById("three");
+            
+            one.addEventListener('click', function(e){
+                alert("clicked red");
+            }, true);
+            
+            two.addEventListener('click', function(e){
+                alert("clicked green");
+            }, true);
+            
+            three.addEventListener('click', function(e){
+                alert("clicked blue");
+                if(e.altKey) {
+                    e.stopPropagation();
+                    alert("Propagaion stopped");
+                }
+            }, true);
+        </script>
+    </body>
+</html>
