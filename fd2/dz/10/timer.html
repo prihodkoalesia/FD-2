@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>timer</title>
+    <meta charset="utf-8">
+    <style>
+        .first {
+            transition: all 1s ease;
+        }
+        
+        .second {
+            transition: all 1s ease;
+        }
+        
+        .first,
+        .second {
+            opacity: 0;
+            top: -40px;
+        }
+        
+        .first.active {
+            opacity: 1;
+            top: 0;
+            animation: fly 1s;
+        }
+        
+        .second.active {
+            animation: fly 10s;
+        }
+        @keyframes fly {
+            from {
+                opacity: 0;
+                top: -40px;
+            }
+            10% {
+                opacity:1;
+                top: 0;
+            }
+            90% {
+                opacity:1;
+                top: 0;
+            }
+            to {
+                opacity: 0;
+                top: 40px;
+            }
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <script type="text/javascript">
+        // создаем наш таймер
+        var timer = new myTimer("myTimer", "myTimerClass");
+        document.body.appendChild(timer);
+        timer.start();
+
+
+        function myTimer(id, elClass) {
+            // не обязательные параметры конструктора со значениями по-умолчанию
+            id = id || "";
+            elClass = elClass || "";
+
+            // у нас есть числа от 00 до 60... будем делать 60 элементов?
+            // нет, в задании об этом не слова. 
+            // Тогда сделаем два набора элементов: от 0 до 6 и от 0 до 9. 
+            // заодно и память сэкономим вместо 61 элемента будем хранить только 17
+
+            // первый разряд - от 0 до 9
+            var first = [];
+
+            // второй разряд - от 0 до 6
+            var second = [];
+
+            // наш результирующий объект
+            var result = document.createElement("div");
+
+            // начальное значение для первого разряда
+            var firstTime = 0;
+            // начальное значение для второго разряда
+            var secondTime = 0;
+
+            // заполняем наши разряды элементами
+            for (var i = 0; i < 10; i++) {
+                first[i] = document.createElement("div");
+                first[i].style.width = "40px";
+                first[i].style.height = "40px";
+                first[i].style.position = "absolute";
+                first[i].style.left = "40px";
+                first[i].className = "first";
+                first[i].innerHTML = i;
+
+            }
+
+            // заполняем наши разряды элементами
+            for (var i = 0; i < 6; i++) {
+                second[i] = document.createElement("div");
+                second[i].className = "second";
+                second[i].innerHTML = i;
+                second[i].style.width = "40px";
+                second[i].style.height = "40px";
+                second[i].style.position = "absolute";
+                second[i].style.left = "0";
+                second[i].className = "second";
+                second[i].innerHTML = i;
+            }
+
+            first.forEach(function(el) {
+                result.appendChild(el);
+            });
+
+            second.forEach(function(el) {
+                result.appendChild(el);
+            })
+
+
+            result.style.overflow = "hidden";
+            result.style.width = "80px";
+            result.style.height = "40px";
+            result.style.position = "relative";
+            result.setAttribute("id", id);
+            result.className = elClass;
+
+
+            result.start = function() {
+                var _self = this;
+                first[0].classList.add("active");
+                second[0].classList.add("active");
+                setInterval(function() {
+                    first[firstTime].classList.remove("active")
+                    firstTime++;
+                    if (firstTime > 9) {
+                        firstTime = 0;
+                        second[secondTime].classList.remove("active")
+                        secondTime++;
+                        if (secondTime > 5) {
+                            secondTime = 0;
+                        }
+                        second[secondTime].classList.add("active");
+                    }
+                    first[firstTime].classList.add("active");
+
+                }, 1000)
+            }
+
+
+            return result;
+        }
+    </script>
+</body>
+
+</html>

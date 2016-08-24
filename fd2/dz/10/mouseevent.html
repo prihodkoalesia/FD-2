@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Событие движения мыши</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        #two {
+            position: absolute;
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Подвигайте мышью</h1>
+    <div id="one"></div>
+    <div id="two">А я у мышки на хвосте</div>
+
+    <script type="text/javascript">
+        var one = document.getElementById("one");
+        var two = document.getElementById("two");
+        var _e;
+        document.addEventListener('mousemove', function(e) {
+            _e = e;
+        });
+        setInterval(function() {
+            two.style.top = _e.clientY + "px";
+            two.style.left = _e.clientX + 20 + "px";
+            flag = true;
+        }, 1000);
+    </script>
+</body>
+
+</html>

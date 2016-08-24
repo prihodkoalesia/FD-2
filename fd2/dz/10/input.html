@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Input</title>
+    <meta charset="utf-8">
+    <style>
+
+    </style>
+</head>
+
+
+
+<body>
+    <script type="text/javascript">
+        // создаем наш инпут
+
+        document.body.appendChild(new myInput("myInput", "myClass", "myName"))
+
+        function myInput(id, elClass, elName) {
+            // не обязательные параметры конструктора со значениями по-умолчанию
+            id = id || "";
+            elClass = elClass || "";
+            elName = elName || "";
+
+            var result = document.createElement("input");
+
+            result.setAttribute("id", id);
+            result.setAttribute("class", elClass);
+            result.setAttribute("name", elName);
+            result.addEventListener("change", function(e) {
+                // событие срабатывает только при потере фокуса
+            });
+            // как же быть?
+            // использовать keyup?
+            // будет работать, но не даст выделить всю строку
+            // result.addEventListener("keyup", function(e){
+            //     this.value = this.value.replace(/13|666|игил/gi, "");
+            // });
+            // что же делать? 
+            // все просто - нужно где-то сохранять старое значение
+            var oldVal = "";
+            result.addEventListener("keyup", function(e) {
+                // а заменять значение будем только если оно изменилось
+                if (this.value != oldVal) {
+                    this.value = this.value.replace(/13|666|игил/gi, "");
+                    oldVal = this.value;
+                }
+            });
+
+            return result;
+        }
+    </script>
+</body>
+
+</html>
