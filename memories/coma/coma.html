@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Запятая</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>Запятая - это самый низкоприоритетный оператор</h1>
+    <pre>
+        var x = 1,2,3,4; // ошибка
+        console.log(x);
+        var x = (1,2,3),4; // ошибка
+        console.log(x);
+        var x = (1,2,3,4); // ошибка
+        console.log(x);
+        
+        function renderCurve() {
+            for (var a = 1, b = 10; a * b; a++, b--) 
+                console.log(new Array(a * b).join('*'));
+        }
+
+        renderCurve();
+        
+    </pre>
+
+
+
+    <script type="text/javascript">
+        //var x = 1,2, 3, 4; // ошибка
+        //сonsole.log(x);
+        //var x = (1, 2, 3),4; // ошибка
+        //console.log(x);
+        var x = (1, 2, 3, 4); // работает
+        console.log(x);
+
+        function renderCurve() {
+            for (var a = 1, b = 10; a * b; a++, b--) 
+                console.log(new Array(a * b).join('*'));
+        }
+
+        renderCurve();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Замыкания</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>Кого же замыкают замыкания?</h1> Замыкания замыкают область видимости, т.е. переменные.
+    <pre>
+            var x = "ogogo";
+            var foo = function() {
+                var y = "gogo";
+            }
+            console.log(x, y);
+        </pre>
+    <h1>Применение замыканий</h1>
+    <h2>Создание приватных свойств</h2>
+    <pre>
+        var Obj1 = function(name, age) {
+            name = name || "Вася";
+            age = age || 18;
+            return {
+                whatIsYourName: function() {
+                    return name;
+                },
+                howAreYouOld: function() {
+                    return age;
+                }
+            }
+        }
+            
+        var Obj2 = (function(name, age) {
+            name = name || "Вася";
+            age = age || 18;
+            console.log(arguments)
+            return function() {
+                return {
+                    whatIsYourName: function() {
+                        return name;
+                    },
+                    howAreYouOld: function() {
+                        return age;
+                    }
+                }
+            }
+        })();
+
+        var human = new Obj1();
+        console.log(human.name);
+        console.log(human.age);
+        console.log(human.whatIsYourName());
+        console.log(human.howAreYouOld());
+
+        var human2 = new Obj2("Вася1", 22);
+        console.log(human2.name);
+        console.log(human2.age);
+        console.log(human2.whatIsYourName());
+        console.log(human2.howAreYouOld());
+    </pre>
+    <h2>Создание статических свойств</h2> Счетчик вызова функции:
+    <pre>
+        function foo() {
+            var count = 0;
+            var times = [];
+            return function() {
+                times.push(new Date());
+                return [++count, times];
+            }
+        }
+        
+        var f1 = new foo();
+        console.log(f1());
+        console.log(f1());
+        console.log(f1());
+        
+        setTimeout(function(){
+            var f2 = new foo();
+            console.log(f2());
+            console.log(f2());
+            console.log(f2());
+        }, 1000);
+    </pre> Счетчик созданных объектов класса:
+    <pre>
+        function Obj3() {
+            this.created = new Date;
+            Obj3.count++; // увеличиваем счетчик при каждом вызове
+            Obj3.last = this.created; // и запоминаем дату
+        }
+        Obj3.count = 0; // начальное значение
+        // (нельзя оставить undefined, т.к. Obj3.count++ будет NaN)
+        Obj3.showStats = function() {
+            return( 'Всего: ' + this.count + ', Последняя: ' + this.last );
+        };
+    </pre>
+
+
+    <script type="text/javascript">
+        var Obj1 = function(name, age) {
+            name = name || "Вася";
+            age = age || 18;
+            return {
+                whatIsYourName: function() {
+                    return name;
+                },
+                howAreYouOld: function() {
+                    return age;
+                }
+            }
+        }
+
+        // В таком подходе - данные для инициализации нужно указывать при объявлении. 
+        var Obj2 = (function(name, age) {
+            name = name || "Вася";
+            age = age || 18;
+            console.log(arguments)
+            return function() {
+                return {
+                    whatIsYourName: function() {
+                        return name;
+                    },
+                    howAreYouOld: function() {
+                        return age;
+                    }
+                }
+            }
+        })();
+
+        var human = new Obj1();
+        console.log(human.name);
+        console.log(human.age);
+        console.log(human.whatIsYourName());
+        console.log(human.howAreYouOld());
+
+        var human2 = new Obj2("Вася1", 22);
+        console.log(human2.name);
+        console.log(human2.age);
+        console.log(human2.whatIsYourName());
+        console.log(human2.howAreYouOld());
+
+
+        function foo() {
+            var count = 0;
+            var times = [];
+            return function() {
+                times.push(new Date());
+                return [++count, times];
+            }
+        }
+
+        var f1 = new foo();
+        console.log(f1());
+        console.log(f1());
+        console.log(f1());
+
+        setTimeout(function() {
+            var f2 = new foo();
+            console.log(f2());
+            console.log(f2());
+            console.log(f2());
+        }, 1000);
+        
+        function Obj3() {
+            this.created = new Date;
+            Obj3.count++; // увеличиваем счетчик при каждом вызове
+            Obj3.last = this.created; // и запоминаем дату
+            return (function() {
+                return {created: Obj3.last, count: Obj3.count};
+            })();
+        }
+        Obj3.count = 0; // начальное значение
+        // (нельзя оставить undefined, т.к. Obj3.count++ будет NaN)
+        
+        Obj3.showStats = function() {
+            return( 'Всего: ' + this.count + ', Последний: ' + this.last );
+        };
+        
+        var o1=new Obj3();
+        var o2=new Obj3();
+        var o3=new Obj3();
+        
+        console.log(Obj3.showStats(), o1, o2, o3);
+        
+    </script>
+</body>
+
+</html>

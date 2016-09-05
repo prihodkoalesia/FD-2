@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Перебор псевдомассивов</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="d1"></div>
+        <div id="d2"></div>
+        <div id="d3"></div>
+        <div id="d4"></div>
+        <div id="d5"></div>
+        <h1>Перебор с помощью for...in</h1>
+        
+        <pre>
+            var divs = document.getElementsByTagName('div');
+            for(i in divs) {
+                console.log(divs[i]);
+            }
+        </pre>
+        Плохой метод - выводит не нужные свойства.
+        
+        <h1>Перебор с помощью цикла</h1>
+        <pre>
+            for(var i=0; i < divs.length; i++) {
+                console.log(divs[i]);
+            }
+        </pre>
+        Может быть применен в большинстве случаев.
+        
+        <h1>Перебор с помощью переназначения контекста</h1>
+        <pre>
+            [].forEach.call(divs, function(p,i,arr) {
+                console.log(p, i, arr[i]);
+            });
+            
+            [].forEach.apply(divs, [function(p,i,arr) {
+                console.log(p, i, arr[i]);
+            }]);
+        </pre>
+        
+        <script type="text/javascript">
+            var divs = document.getElementsByTagName('div');
+            for(i in divs) {
+                console.log(divs[i]);
+            }
+            for(var i=0; i < divs.length; i++) {
+                console.log(divs[i]);
+            }
+            
+            [].forEach.call(divs, function(p,i,arr) {
+                console.log(p, i, arr[i]);
+            });
+            
+            [].forEach.apply(divs, [function(p,i,arr) {
+                console.log(p, i, arr[i]);
+            }]);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Перебор массивов</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Циклом</h1>
+        <pre>
+            var arr1=[1,2,3,4,5,6,7];
+            
+            for (var i=0; i < arr1.length; i++) {
+                console.log(i,arr1[i]);
+            }
+        </pre>
+            
+        <h1>С помощью методов массива</h1>
+        
+        <pre>
+            arr1.forEach(function(p,i,arr){
+                console.log(p,i);
+            });
+        </pre>
+        Методы map и filter также можно использовать для перебора элементов, хотя у них и другие задачи.
+        <pre>
+            arr1.map(function(p,i,arr){
+                console.log(p,i);
+            });
+            arr1.filter(function(p,i,arr){
+                console.log(p,i);
+            });
+        </pre>
+        <strong>Методы map и filter возвращают новый массив! (можно использовать для копирования)</strong>
+        
+        <h1>Конструкция for...in</h1>
+        <pre>
+            for (var i in arr1) {
+                console.log(i, arr1[i]);
+            }
+        </pre>
+        Конструкцию for...in удобно использовать для перебора "дырявых" массивов. 
+        <pre>
+            var arr2 = [];
+            arr2[1]=1;
+            arr2[5]=2;
+            arr2[9]=3;
+            for (var i in arr2) {
+                console.log(i, arr2[i]);
+            }
+        </pre>
+        <script type="text/javascript">
+            var arr1=[1,2,3,4,5,6,7];
+            
+            for (var i=0; i<arr1.length; i++) {
+                console.log(i,arr1[i]);
+            }
+            
+            arr1.forEach(function(p,i,arr){
+                console.log(p,i);
+            });
+            
+            arr1.filter(function(p,i,arr){
+                console.log(p,i);
+            });
+            
+            arr1.map(function(p,i,arr){
+                console.log(p,i);
+            });
+            
+            for (var i in arr1) {
+                console.log(i, arr1[i]);
+            }
+            
+            
+            var arr2 = [];
+            arr2[1]=1;
+            arr2[5]=2;
+            arr2[9]=3;
+            for (var i in arr2) {
+                console.log(i, arr2[i]);
+            }
+        </script>
+    </body>
+</html>

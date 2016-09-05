@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Объявление и инициализация массивов</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Объявление</h1>
+        Объявление массива - это указание, что некая переменная является массивом. 
+        <pre>
+            var arr=[];
+            var arr=new Array();
+        </pre>
+        <h1>Инициализация</h1>
+        Инициализация массива - это назначение конкретных значений данной переменной.
+        <h1>Способы инициализации массивов</h1>
+        При объявлении:
+        <pre>
+            var arr1 = new Array(3,4,5);
+            var arr2 = [3,4,5];
+        </pre>
+        После объявления:
+        <pre>
+            var arr3 = [];
+            arr3.push(3,4,5);
+            var arr4 = [];
+            arr4.unshift(3,4,5);
+            var arr5 = [];
+            arr5.unshift(5);
+            arr5.unshift(4);
+            arr5.unshift(3);
+            var arr6 = [];
+            arr6[arr.length]=3;
+            arr6[arr.length]=4;
+            arr6[arr.length]=5;
+        </pre>
+        <script type="text/javascript">
+            var arr1 = new Array(3,4,5);
+            var arr2 = [3,4,5];
+            var arr3 = [];
+            var arr4 = [];
+            var arr5 = [];
+            var arr6 = [];
+            
+            arr3.push(3,4,5);
+            
+            arr4.unshift(3,4,5);
+            
+            arr5.unshift(5);
+            arr5.unshift(4);
+            arr5.unshift(3);
+            
+            arr6[arr6.length]=3;
+            arr6[arr6.length]=4;
+            arr6[arr6.length]=5;
+            
+            console.log(arr1,arr2,arr3,arr4,arr5, arr6);
+        </script>
+    </body>
+</html>
