@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> </title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+        var v = (function() {
+            var div = document.createElement('div');
+            return {
+                render: function(data) {
+                    div.innerHTML = data;
+                    document.body.appendChild(div);
+                }
+            }
+        })();
+        
+        var v1 = (function() {
+            return {
+                render: function(data) {
+                    console.log(data);
+                }
+            }
+        })();
+        
+        var v2 = (function() {
+            return {
+                render: function(data) {
+                    alert(data);
+                }
+            }
+        })();
+
+        var m = (function() {
+            var arr = [1, 2, 3];
+            return {
+                getData: function() {
+                    return arr.join(',');
+                }
+            }
+        })();
+
+        var controller = (function(model, view) {
+            return {
+                render: function() {
+                    view.render(model.getData());
+                }
+            }
+        })(m, v);
+        
+        controller.render();
+        
+        var controller = (function(model, view) {
+            return {
+                render: function() {
+                    view.render(model.getData());
+                }
+            }
+        })(m, v1);
+        controller.render();
+        
+        var controller = (function(model, view) {
+            return {
+                render: function() {
+                    view.render(model.getData());
+                }
+            }
+        })(m, v2);
+        controller.render();
+        
+        
+    </script>
+</body>
+
+</html>
